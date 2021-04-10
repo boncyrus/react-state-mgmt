@@ -1,16 +1,17 @@
-import { Todo } from './todo';
-import { ActionsObservable, ofType } from 'redux-observable';
-import { switchMap, map } from 'rxjs/operators';
-import * as todoActions from './actions';
+import { switchMap, map, filter } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
+import { createAction, Action } from '@reduxjs/toolkit';
+import { Observable } from 'rxjs';
+import { getTodosCompleted, } from '../todo/todo'
+import { Todo } from '../../../models/Todo';
 
-export const todoEpic = (actions$: ActionsObservable<todoActions.TodoActionTypes>) => {
+export const todoEpic = (actions$: Observable<Action>) => {
     return actions$.pipe(
-        ofType(todoActions.GET_TODOS),
-        switchMap(() =>
-            ajax
+        filter(createAction('todo/getTodos').match),
+        switchMap(() => {
+            return ajax
                 .getJSON<Todo[]>(`https://jsonplaceholder.typicode.com/todos`)
-                .pipe(map((response) => todoActions.getTodosCompleted(response)))
-        )
+                .pipe(map((response) => getTodosCompleted(response)))
+        })
     );
 };
