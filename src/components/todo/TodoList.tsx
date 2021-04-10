@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../store/rootState';
-import { getTodos } from '../../store/todo/actions';
-import { selectTodos } from '../../store/todo/selectors';
+import { getTodos } from '../../store/observable/todo/actions';
+import { selectTodos } from '../../store/observable/todo/selectors';
 import './TodoList.css';
 
 const mapStateToProps = (state: RootState) => ({
@@ -14,14 +14,14 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-interface AppProps extends ConnectedProps<typeof connector> {}
+interface AppProps extends ConnectedProps<typeof connector> { }
 
 const TodoList: FunctionComponent<AppProps> = ({ getTodos, todos }) => {
     useEffect(
         () => {
             getTodos();
         },
-        [ getTodos ]
+        [getTodos]
     );
 
     return (

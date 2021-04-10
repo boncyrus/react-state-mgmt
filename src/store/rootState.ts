@@ -1,4 +1,4 @@
-import * as todo from './todo/reducer';
+import * as todo from './observable/todo/reducer';
 
 export interface RootState {
     todo: todo.State;
