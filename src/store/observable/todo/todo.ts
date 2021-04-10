@@ -6,6 +6,11 @@ export interface State {
     loading: boolean;
 }
 
+const initialState: State = {
+    loading: false,
+    todos: []
+}
+
 const reducer = {
     getTodos: (state: State) => {
         state.loading = true
@@ -18,10 +23,7 @@ const reducer = {
 
 export const todoSlice = createSlice<State, typeof reducer>({
     name: 'todo',
-    initialState: {
-        loading: false,
-        todos: []
-    },
+    initialState,
     reducers: reducer
 });
 
