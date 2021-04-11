@@ -6,7 +6,7 @@ import { Todo } from '../../../models/Todo';
 
 export const todoEpic = (actions$: Observable<Action>) => {
     return actions$.pipe(
-        filter(action => getTodos.match(action)),
+        filter(getTodos.match),
         switchMap(() => {
             const getTodos = () => {
                 const request = fetch(`https://jsonplaceholder.typicode.com/todos`)
